@@ -1,0 +1,26 @@
+GET http://localhost:8080/usuarios
+
+####
+
+POST http://localhost:8080/usuarios
+Content-Type: application/json
+
+{
+    "id": 1,
+    "nombre": "Jol",
+    "email": "jol@example.com"
+}
+####
+
+put http://localhost:8080/usuarios/1
+Content-Type: application/json
+
+{
+    "nombre":"Joel Fuster Bosch",
+    "email":"joel@gmail.com",
+    "mensaje":"Usuari actualtzat de forma correcta"
+}
+
+####
+
+DELETE http://localhost:8080/usuarios/2

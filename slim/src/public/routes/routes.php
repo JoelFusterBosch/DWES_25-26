@@ -5,15 +5,15 @@ use Slim\Factory\AppFactory;
 
 /* Ruatas del api */
 
-$app->get('/usuarios', function ($request, $response, $args) use ($pdo) {
+$app->get('/airports', function ($request, $response, $args) use ($pdo) {
 // Realizamos la consulta para obtener los usuarios
-$stmt = $pdo->query("SELECT * FROM usuarios");
-$usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$stmt = $pdo->query("SELECT * FROM aeropuertos");
+$aeropuertos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // Creamos un array con los usuarios y el número total de usuarios
 $data = [
-    'total' => count($usuarios),  // Contamos el número de usuarios
-    'usuarios' => $usuarios       // Los datos de los usuarios
+    'total' => count($aeropuertos),  // Contamos el número de usuarios
+    'aeropuertos' => $aeropuertos       // Los datos de los usuarios
 ];
 
 // Codificamos el resultado en JSON
@@ -22,91 +22,67 @@ $response->getBody()->write(json_encode($data));
 // Establecemos el header Content-Type a application/json
 return $response->withHeader('Content-Type', 'application/json');
 });
-$app->post('/usuarios', function ($request, $response, $args) use ($pdo) {
-    $data = json_decode($request->getBody(), true);
 
-    $nombre = $data['nombre'] ?? '';
-    $email = $data['email'] ?? '';
 
-    // Validaciones
-    if (empty($nombre) || empty($email)) {
-        $payload = [
-            'error' => true,
-            'message' => 'El nombre y el email son requeridos.'
-        ];
-        $response->getBody()->write(json_encode($payload));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-    }
+$app->get('/cities', function ($request, $response, $args) use ($pdo) {
+// Realizamos la consulta para obtener los usuarios
+$stmt = $pdo->query("SELECT * FROM ciudades");
+$ciudades = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        $payload = [
-            'error' => true,
-            'message' => 'El email es inválido.'
-        ];
-        $response->getBody()->write(json_encode($payload));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(400);
-    }
+// Creamos un array con los usuarios y el número total de usuarios
+$data = [
+    'total' => count($ciudades),  // Contamos el número de usuarios
+    'ciudades' => $ciudades       // Los datos de los usuarios
+];
 
-    try {
-        $stmt = $pdo->prepare("INSERT INTO usuarios (nombre, email) VALUES (?, ?)");
-        $stmt->execute([$nombre, $email]);
-        $id = $pdo->lastInsertId();
+// Codificamos el resultado en JSON
+$response->getBody()->write(json_encode($data));
 
-        $payload = [
-            'error' => false,
-            'message' => 'Usuario creado correctamente.',
-            'usuario' => [
-                'id' => $id,
-                'nombre' => $nombre,
-                'email' => $email
-            ]
-        ];
-
-        $response->getBody()->write(json_encode($payload));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(201);
-    } catch (PDOException $e) {
-        $payload = [
-            'error' => true,
-            'message' => 'Error en la base de datos: ' . $e->getMessage()
-        ];
-        $response->getBody()->write(json_encode($payload));
-        return $response->withHeader('Content-Type', 'application/json')->withStatus(500);
-    }
+// Establecemos el header Content-Type a application/json
+return $response->withHeader('Content-Type', 'application/json');
 });
 
 
-$app->put('/usuarios/{id}', function ($request, $response, $args) use ($pdo) {
+$app->get('/airports/{id}', function ($request, $response, $args) use ($pdo) {
     $id = $args['id'];
     $data= json_decode($request->getBody(), true);
-    $nombre = $data['nombre'];
-    $email = $data['email'];
 
-    $stmt = $pdo->prepare("UPDATE usuarios SET nombre = ?, email = ? WHERE id = ?");
-    $stmt->execute([$nombre, $email, $id]);
-
-    $output  = [
-        'id' => $id,
-        'nombre' => $nombre,
-        'email' => $email,
-        'mensaje' => 'Usuario actualizado correctamente'
-    ];
-
-    $response->getBody()->write(json_encode($output));
-    return $response->withHeader('Content-Type', 'application/json');
-
-});
-$app->delete('/usuarios/{id}', function ($request, $response, $args) use ($pdo) {
-    $id = $args['id'];
-
-    $stmt = $pdo->prepare("DELETE FROM usuarios WHERE id = ?");
+    $stmt = $pdo->prepare("SELECT * FROM aeropuertos WHERE id = ?");
     $stmt->execute([$id]);
+    $aeropuertos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-    $output  = [
-        'id' => $id,
-        'mensaje' => 'Usuario eliminado correctamente'
+    // Creamos un array con los usuarios y el número total de usuarios
+    $data = [
+        'total' => count($aeropuertos),  // Contamos el número de usuarios
+        'aeropuertos' => $aeropuertos       // Los datos de los usuarios
     ];
-
-    $response->getBody()->write(json_encode($output));
+    
+    // Codificamos el resultado en JSON
+    $response->getBody()->write(json_encode($data));
+    
+    // Establecemos el header Content-Type a application/json
     return $response->withHeader('Content-Type', 'application/json');
+});
+
+
+$app->get('/cities/{id}', function ($request, $response, $args) use ($pdo) {
+    $id = $args['id'];
+    $data= json_decode($request->getBody(), true);
+
+    $stmt = $pdo->prepare("SELECT * FROM ciudades WHERE id = ?");
+    $stmt->execute([$id]);
+    $ciudades = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+    // Creamos un array con los usuarios y el número total de usuarios
+    $data = [
+        'total' => count($ciudades),  // Contamos el número de usuarios
+        'ciudades' => $ciudades      // Los datos de los usuarios
+    ];
+    
+    // Codificamos el resultado en JSON
+    $response->getBody()->write(json_encode($data));
+    
+    // Establecemos el header Content-Type a application/json
+    return $response->withHeader('Content-Type', 'application/json',);
 });
 ?>

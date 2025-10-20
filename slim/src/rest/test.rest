@@ -1,26 +1,17 @@
-GET http://localhost:8080/usuarios
+GET http://localhost:8080/
+
+####´
+
+GET http://localhost:8080/airports
 
 ####
 
-POST http://localhost:8080/usuarios
-Content-Type: application/json
-
-{
-    "id": 1,
-    "nombre": "Jol",
-    "email": "jol@example.com"
-}
-####
-
-put http://localhost:8080/usuarios/1
-Content-Type: application/json
-
-{
-    "nombre":"Joel Fuster Bosch",
-    "email":"joel@gmail.com",
-    "mensaje":"Usuari actualtzat de forma correcta"
-}
+GET http://localhost:8080/airports/1
 
 ####
 
-DELETE http://localhost:8080/usuarios/2
+GET http://localhost:8080/cities
+
+####
+
+GET http://localhost:8080/cities/1
