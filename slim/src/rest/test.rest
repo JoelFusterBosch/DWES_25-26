@@ -15,3 +15,13 @@ GET http://localhost:8080/cities
 ####
 
 GET http://localhost:8080/cities/1
+
+####
+GET http://localhost:8080/connections
+
+####
+GET http://localhost:8080/connections/1/2
+
+####
+
+GET http://localhost:8080/airport/1/connections
