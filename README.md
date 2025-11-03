@@ -44,3 +44,9 @@ I el crearem la base de dades de la següent forma:
 ```bash
 CREATE DATABASE test;
 ```
+docker cp /mysql/tmp/airports.csv mysql_container:/tmp/airports.csv
+
+mysql> CREATE TABLE aeropuertos (     id INT,     ident VARCHAR(50),     tipo VARCHAR(50),     nombre_aeropuerto VARCHAR(255),     latitud_deg DECIMAL(10,6),     longitud_deg DECIMAL(10,6),     elevacion_ft VARCHAR(10),     continente VARCHAR(10),     iso_pais VARCHAR(10),     iso_region VARCHAR(50),     municipio VARCHAR(100),     servicio_programado VARCHAR(10),     codigo_icao VARCHAR(10),     codigo_iata VARCHAR(10),     codigo_gps VARCHAR(10),     codigo_local VARCHAR(10),     link_inicio TEXT,     link_wikipedia TEXT,     
+palabras_clave TEXT );
+
+mysql> LOAD DATA INFILE '/var/lib/mysql-files/airports.csv' INTO TABLE aeropuertos CHARACTER SET utf8mb4 FIELDS TERMINATED BY ','  OPTIONALLY ENCLOSED BY '"'  LINES TERMINATED BY '\r\n' IGNORE 1 LINES;

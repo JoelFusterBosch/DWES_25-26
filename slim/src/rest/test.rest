@@ -1,6 +1,6 @@
 GET http://localhost:8080/
 
-####´
+####
 
 GET http://localhost:8080/airports
 
@@ -20,8 +20,90 @@ GET http://localhost:8080/cities/1
 GET http://localhost:8080/connections
 
 ####
-GET http://localhost:8080/connections/1/2
+GET http://localhost:8080/connections/29/55
 
 ####
 
 GET http://localhost:8080/airport/1/connections
+
+####
+GET http://localhost:8080/connections/with-stops/1/2
+
+####
+
+GET http://localhost:8080/airport/1/connections/with-stops
+
+####
+
+POST http://localhost:8080/airports
+Content-Type: application/json
+
+{
+  "ident": "MAD001",
+  "tipo": "aeropuerto_internacional",
+  "nombre_aeropuerto": "Aeropuerto Adolfo Suárez Madrid-Barajas",
+  "latitud_deg": 40.4983,
+  "longitud_deg": -3.5676,
+  "elevacion_ft": 2000,
+  "continente": "EU",
+  "iso_pais": "ES",
+  "iso_region": "ES-MD",
+  "municipio": "Madrid",
+  "servicio_programado": "no",
+  "codigo_icao": "LEMD",
+  "codigo_iata": "MAD",
+  "codigo_gps": "LEMD",
+  "codigo_local": "MAD",
+  "link_inicio": "https://www.aena.es/es/adolfo-suarez-madrid-barajas.html",
+  "link_wikipedia": "https://es.wikipedia.org/wiki/Aeropuerto_de_Madrid-Barajas",
+  "palabras_clave": "España, Madrid, aeropuerto internacional"
+}
+
+####
+PUT http://localhost:8080/airport/601174
+Content-Type: application/json
+
+{
+    "ident": "MS001",
+    "tipo": "aeropuerto_internacional",
+    "nombre_aeropuerto": "Madrid-Barajas",
+    "latitud_deg": 40.472,
+    "longitud_deg": -3.562,
+    "elevacion_ft": 2000.0,
+    "continente": "EU",
+    "iso_pais": "ES",
+    "iso_region": "ES-MD",
+    "municipio": "Madrid",
+    "servicio_programado": "si",
+    "codigo_icao": "LEMD",
+    "codigo_iata": "MAD",
+    "codigo_gps": "LEMD",
+    "codigo_local": "",
+    "link_inicio": "https://www.aena.es/es/adolfo-suarez-madrid-barajas.html",
+    "link_wikipedia": "https://es.wikipedia.org/wiki/Aeropuerto_Adolfo_Su%C3%A1rez_Madrid-Barajas",
+    "palabras_clave": "barajas,madrid,aeropuerto internacional",
+    "mensaje":"Aeroport actualtzat de forma correcta"
+}
+
+#### 
+DELETE http://localhost:8080/airports/601177
+
+#### 
+POST http://localhost:8080/connections
+Content-Type: application/json
+
+{
+  "aerolinea": "IB",
+  "id": 1,
+  "aeropuerto_origen": "MAD",
+  "id_aeropuerto_origen": 276,
+  "aeropuerto_destino": "BCN",
+  "id_aeropuerto_destino": 296,
+  "codigo_compartido": "NO",
+  "paradas": 0,
+  "equipamiento": "A320"
+}
+
+
+####
+DELETE http://localhost:8080/connections/0 
